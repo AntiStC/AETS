@@ -2,6 +2,7 @@ package ru.sspk.ssdmd.model.entity;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.Objects;
 
 @Table(name = "question", catalog = "public", schema = "sspk_aets")
 @Entity
@@ -18,5 +19,100 @@ public class Question {
     @Column(name = "modify_at")
     private Timestamp modifyAt;
 
-    //TODO builder, getter, setter, construction, toString
+    public Question() {
+    }
+
+    public static class Builder {
+
+        private Long id;
+        private String bodyQuestion;
+        private Timestamp createAt;
+        private Timestamp modifyAt;
+
+        public Builder setId(Long id) {
+            this.id = id;
+            return this;
+        }
+
+        public Builder setBodyQuestion(String bodyQuestion) {
+            this.bodyQuestion = bodyQuestion;
+            return this;
+        }
+
+        public Builder setCreateAt(Timestamp createAt) {
+            this.createAt = createAt;
+            return this;
+        }
+
+        public Builder setModifyAt(Timestamp modifyAt) {
+            this.modifyAt = modifyAt;
+            return this;
+        }
+
+        public Question build() {
+            return new Question(this);
+        }
+    }
+
+    private Question(Builder builder) {
+        this.id = builder.id;
+        this.bodyQuestion = builder.bodyQuestion;
+        this.createAt = builder.createAt;
+        this.modifyAt = builder.modifyAt;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getBodyQuestion() {
+        return bodyQuestion;
+    }
+
+    public void setBodyQuestion(String bodyQuestion) {
+        this.bodyQuestion = bodyQuestion;
+    }
+
+    public Timestamp getCreateAt() {
+        return createAt;
+    }
+
+    public void setCreateAt(Timestamp createAt) {
+        this.createAt = createAt;
+    }
+
+    public Timestamp getModifyAt() {
+        return modifyAt;
+    }
+
+    public void setModifyAt(Timestamp modifyAt) {
+        this.modifyAt = modifyAt;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Question question = (Question) o;
+        return bodyQuestion.equals(question.bodyQuestion);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(bodyQuestion);
+    }
+
+    @Override
+    public String toString() {
+        return "Question{" +
+                "id=" + id +
+                ", bodyQuestion='" + bodyQuestion + '\'' +
+                ", createAt=" + createAt +
+                ", modifyAt=" + modifyAt +
+                '}';
+    }
 }
