@@ -37,6 +37,8 @@ public class Person {
         private String department;
         private Boolean chief;
 
+        //TODO user onetomany
+
         public void setId(Long id) {
             this.id = id;
         }
