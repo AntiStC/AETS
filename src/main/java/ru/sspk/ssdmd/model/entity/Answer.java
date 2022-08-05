@@ -10,6 +10,7 @@ public class Answer {
 
     @Column(name = "id_answer")
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(name = "text_answer")
     private String textAnswer;

@@ -11,6 +11,7 @@ public class QuestionGroup {
 
     @Column(name = "id_group")
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(name = "name_group")
     private String name;
