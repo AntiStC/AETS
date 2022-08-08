@@ -80,6 +80,7 @@ public class PersonDto {
         this.email = builder.email;
         this.department = builder.department;
         this.chief = builder.chief;
+        this.userDtos=builder.userDtos;
     }
 
     public Long getId() {
