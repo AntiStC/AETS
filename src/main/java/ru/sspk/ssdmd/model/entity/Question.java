@@ -2,6 +2,7 @@ package ru.sspk.ssdmd.model.entity;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.List;
 import java.util.Objects;
 
 @Table(name = "question", catalog = "public", schema = "sspk_aets")
@@ -18,6 +19,8 @@ public class Question {
     private Timestamp createAt;
     @Column(name = "modify_at")
     private Timestamp modifyAt;
+    @OneToMany
+    private List<Answer> answers;
 
     public Question() {
     }
@@ -28,6 +31,7 @@ public class Question {
         private String bodyQuestion;
         private Timestamp createAt;
         private Timestamp modifyAt;
+        private List<Answer> answers;
 
         public Builder setId(Long id) {
             this.id = id;
@@ -49,6 +53,11 @@ public class Question {
             return this;
         }
 
+        public Builder setAnswers(List<Answer> answers) {
+            this.answers = answers;
+            return this;
+        }
+
         public Question build() {
             return new Question(this);
         }
@@ -59,6 +68,7 @@ public class Question {
         this.bodyQuestion = builder.bodyQuestion;
         this.createAt = builder.createAt;
         this.modifyAt = builder.modifyAt;
+        this.answers = builder.answers;
     }
 
     public Long getId() {
@@ -93,6 +103,14 @@ public class Question {
         this.modifyAt = modifyAt;
     }
 
+    public List<Answer> getAnswers() {
+        return answers;
+    }
+
+    public void setAnswers(List<Answer> answers) {
+        this.answers = answers;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -113,6 +131,7 @@ public class Question {
                 ", bodyQuestion='" + bodyQuestion + '\'' +
                 ", createAt=" + createAt +
                 ", modifyAt=" + modifyAt +
+                ", answers=" + answers +
                 '}';
     }
 }

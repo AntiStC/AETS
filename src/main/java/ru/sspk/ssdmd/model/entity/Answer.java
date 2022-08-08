@@ -16,16 +16,12 @@ public class Answer {
     private String textAnswer;
     @Column(name = "current")
     private Boolean current;
-    @Column(name = "qwestion_fk")
-    @OneToMany
-    private Question question;
 
     public static class Builder {
 
         private Long id;
         private String textAnswer;
         private Boolean current;
-        private Question question;
 
         public Builder setId(Long id) {
             this.id = id;
@@ -42,11 +38,6 @@ public class Answer {
             return this;
         }
 
-        public Builder setQuestion(Question question) {
-            this.question = question;
-            return this;
-        }
-
         public Answer build() {
             return new Answer(this);
         }
@@ -56,7 +47,6 @@ public class Answer {
         this.id = builder.id;
         this.textAnswer = builder.textAnswer;
         this.current = builder.current;
-        this.question = builder.question;
     }
 
     public Long getId() {
@@ -83,14 +73,6 @@ public class Answer {
         this.current = current;
     }
 
-    public Question getQuestion() {
-        return question;
-    }
-
-    public void setQuestion(Question question) {
-        this.question = question;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -110,7 +92,6 @@ public class Answer {
                 "id=" + id +
                 ", textAnswer='" + textAnswer + '\'' +
                 ", current=" + current +
-                ", question=" + question +
                 '}';
     }
 }
