@@ -1,0 +1,48 @@
+dn: dc=springframework,dc=org
+objectclass: top
+objectclass: domain
+objectclass: extensibleObject
+dc: springframework
+
+dn: ou=groups,dc=springframework,dc=org
+objectclass: top
+objectclass: organizationalUnit
+ou: groups
+
+dn: ou=people,dc=springframework,dc=org
+objectclass: top
+objectclass: organizationalUnit
+ou: people
+
+dn: uid=anton,ou=people,dc=springframework,dc=org
+objectclass: top
+objectclass: person
+objectclass: organizationalPerson
+objectclass: inetOrgPerson
+cn: Anton
+sn:
+uid: anton
+userPassword: $2y$10$FmX/.LwRojXyPA/22739Be1cO.7Z7mX.qyXhm8QjxrOs2iz8gseNu
+mail: anton@mail.ru
+
+dn: uid=kirill,ou=people,dc=springframework,dc=org
+objectclass: top
+objectclass: person
+objectclass: organizationalPerson
+objectclass: inetOrgPerson
+cn: Kirill
+sn:
+uid: kirill
+userPassword: $2y$10$FmX/.LwRojXyPA/22739Be1cO.7Z7mX.qyXhm8QjxrOs2iz8gseNu
+mail: kirill@mail.ru
+
+dn: uid=vitaliy,ou=people,dc=springframework,dc=org
+objectclass: top
+objectclass: person
+objectclass: organizationalPerson
+objectclass: inetOrgPerson
+cn: Vitaliy
+sn:
+uid: vitaliy
+userPassword: $2y$10$FmX/.LwRojXyPA/22739Be1cO.7Z7mX.qyXhm8QjxrOs2iz8gseNu
+mail: vitaliy@mail.ru
