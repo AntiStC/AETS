@@ -5,6 +5,8 @@ import ru.sspk.ssdmd.model.dto.UserDto;
 import ru.sspk.ssdmd.model.entity.RoleUser;
 import ru.sspk.ssdmd.model.entity.User;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -31,5 +33,10 @@ public class RoleUserMapper {
                 .build();
 
         return roleUser;
+    }
+
+    public static List<RoleUserDto> toListRoleUser(List<RoleUser> roleUserList){
+        return new ArrayList<>((roleUserList).stream().map(RoleUserMapper::toDto)
+                .collect(Collectors.toList()));
     }
 }
