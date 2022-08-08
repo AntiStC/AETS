@@ -11,8 +11,10 @@ import java.util.stream.Collectors;
 
 public class PersonMapper {
     public static PersonDto toDto(Person person) {
+
         List<UserDto> userDtoList = person.getUsers().stream()
                 .map(UserMapper::toDto).toList();
+
         PersonDto personDto = new PersonDto.Builder()
                 .setId(person.getId())
                 .setFirstName(person.getFirstName())
@@ -28,8 +30,10 @@ public class PersonMapper {
     }
 
     public static Person toEntity(PersonDto personDto) {
+
         List<User> userList = personDto.getUserDtos().stream()
                 .map(UserMapper::toEntity).toList();
+
         Person person = new Person.Builder()
                 .setId(personDto.getId())
                 .setFirstName(personDto.getFirstName())
@@ -45,6 +49,7 @@ public class PersonMapper {
     }
 
     public static List<PersonDto> toListPerson(List<Person> personList) {
+
         return new ArrayList<>((personList).stream().map(PersonMapper::toDto)
                 .collect(Collectors.toList()));
     }

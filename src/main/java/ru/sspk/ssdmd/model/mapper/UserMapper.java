@@ -12,8 +12,10 @@ import java.util.stream.Collectors;
 
 public class UserMapper {
     public static UserDto toDto(User user) {
+
         Set<RoleUserDto> roleUserDtoSet = user.getRoles().stream()
                 .map(RoleUserMapper::toDto).collect(Collectors.toSet());
+
         UserDto userDto = new UserDto.Builder()
                 .setId(user.getId())
                 .setLogin(user.getLogin())
@@ -25,8 +27,10 @@ public class UserMapper {
     }
 
     public static User toEntity(UserDto userDto) {
+
         Set<RoleUser> roleUserSet = userDto.getRoles().stream()
                 .map(RoleUserMapper::toEntity).collect(Collectors.toSet());
+
         User user = new User.Builder()
                 .setId(userDto.getId())
                 .setLogin(userDto.getLogin())
@@ -38,6 +42,7 @@ public class UserMapper {
     }
 
     public static List<UserDto> toListUser(List<User> userList) {
+
         return new ArrayList<>((userList).stream().map(UserMapper::toDto)
                 .collect(Collectors.toList()));
     }
