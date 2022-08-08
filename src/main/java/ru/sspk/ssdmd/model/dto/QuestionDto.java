@@ -1,6 +1,7 @@
 package ru.sspk.ssdmd.model.dto;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 public class QuestionDto {
 
@@ -8,6 +9,7 @@ public class QuestionDto {
     private String bodyQuestion;
     private Timestamp createAt;
     private Timestamp modifyAt;
+    private List<AnswerDto> answerDtos;
 
     public QuestionDto() {
     }
@@ -18,6 +20,7 @@ public class QuestionDto {
         private String bodyQuestion;
         private Timestamp createAt;
         private Timestamp modifyAt;
+        private List<AnswerDto> answerDtos;
 
         public Builder setId(Long id) {
             this.id = id;
@@ -39,6 +42,11 @@ public class QuestionDto {
             return this;
         }
 
+        public Builder setAnswerDtos(List<AnswerDto> answerDtos) {
+            this.answerDtos = answerDtos;
+            return this;
+        }
+
         public QuestionDto build() {
             return new QuestionDto(this);
         }
@@ -49,6 +57,7 @@ public class QuestionDto {
         this.bodyQuestion = builder.bodyQuestion;
         this.createAt = builder.createAt;
         this.modifyAt = builder.modifyAt;
+        this.answerDtos = builder.answerDtos;
     }
 
     public Long getId() {
@@ -83,6 +92,14 @@ public class QuestionDto {
         this.modifyAt = modifyAt;
     }
 
+    public List<AnswerDto> getAnswerDtos() {
+        return answerDtos;
+    }
+
+    public void setAnswerDtos(List<AnswerDto> answerDtos) {
+        this.answerDtos = answerDtos;
+    }
+
     @Override
     public String toString() {
         return "QuestionDto{" +
@@ -90,6 +107,7 @@ public class QuestionDto {
                 ", bodyQuestion='" + bodyQuestion + '\'' +
                 ", createAt=" + createAt +
                 ", modifyAt=" + modifyAt +
+                ", answerDtos=" + answerDtos +
                 '}';
     }
 }
