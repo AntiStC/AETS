@@ -1,9 +1,8 @@
 package ru.sspk.ssdmd.model.entity;
 
-import ru.sspk.ssdmd.model.entity.enumEntity.RoleUser;
-
 import javax.persistence.*;
 import java.util.Objects;
+import java.util.Set;
 
 @Table(name = "user", catalog = "public", schema = "sspk_aets")
 @Entity
@@ -17,9 +16,8 @@ public class User {
     private String login;
     @Column(name = "password")
     private String password;
-    @Column(name = "role_user")
-    @Enumerated(EnumType.STRING)
-    private RoleUser role;
+    @ManyToMany
+    private Set<RoleUser> roles;
 
     public User() {
     }
@@ -29,7 +27,7 @@ public class User {
         private Long id;
         private String login;
         private String password;
-        private RoleUser role;
+        private Set<RoleUser> roles;
 
         public Builder setId(Long id) {
             this.id = id;
@@ -46,8 +44,8 @@ public class User {
             return this;
         }
 
-        public Builder setRole(RoleUser role) {
-            this.role = role;
+        public Builder setRoles(Set<RoleUser> roles) {
+            this.roles = roles;
             return this;
         }
 
@@ -60,7 +58,7 @@ public class User {
         this.id = builder.id;
         this.login = builder.login;
         this.password = builder.password;
-        this.role = builder.role;
+        this.roles = builder.roles;
     }
 
     public Long getId() {
@@ -87,12 +85,12 @@ public class User {
         this.password = password;
     }
 
-    public RoleUser getRole() {
-        return role;
+    public Set<RoleUser> getRoles() {
+        return roles;
     }
 
-    public void setRole(RoleUser role) {
-        this.role = role;
+    public void setRoles(Set<RoleUser> roles) {
+        this.roles = roles;
     }
 
     @Override
@@ -116,7 +114,7 @@ public class User {
                 "id=" + id +
                 ", login='" + login + '\'' +
                 ", password='" + password + '\'' +
-                ", role=" + role +
+                ", roles=" + roles +
                 '}';
     }
 }
