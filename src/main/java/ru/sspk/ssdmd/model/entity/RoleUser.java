@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.Objects;
 import java.util.Set;
 
-@Table(name = "role_user", catalog = "public", schema = "sspk_aets")
+@Table(name = "role_user", schema = "public", catalog = "sspk_aets")
 @Entity
 public class RoleUser {
     @Column(name = "id_role")
