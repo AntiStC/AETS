@@ -3,7 +3,7 @@ package ru.sspk.ssdmd.model.entity;
 import javax.persistence.*;
 import java.util.Objects;
 
-@Table(name = "person", catalog = "public", schema = "sspk_aets")
+@Table(name = "person", schema = "public", catalog = "sspk_aets")
 @Entity
 public class Person {
 

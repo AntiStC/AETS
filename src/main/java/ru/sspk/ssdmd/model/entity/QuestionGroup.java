@@ -5,7 +5,7 @@ import javax.persistence.*;
 import java.util.List;
 import java.util.Objects;
 
-@Table(name = "question_group", catalog = "public", schema = "sspk_aets")
+@Table(name = "question_group", schema = "public", catalog = "sspk_aets")
 @Entity
 public class QuestionGroup {
 
@@ -17,6 +17,8 @@ public class QuestionGroup {
     private String name;
     @OneToMany
     private List<Question> questionList;
+
+    public QuestionGroup() {}
 
     public static class Builder {
 

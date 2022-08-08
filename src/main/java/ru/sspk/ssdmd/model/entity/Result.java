@@ -6,20 +6,24 @@ import java.sql.Timestamp;
 import java.util.List;
 import java.util.Objects;
 
-@Table(name = "result", catalog = "public", schema = "sspk_aets")
 @Entity
+@Table(name = "result", schema = "public", catalog = "sspk_aets")
 public class Result {
 
     @Column(name = "id_result")
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Column(name = "test_result")
     private Boolean testResult;
+
     @Column(name = "time_at")
     private Timestamp timeAt;
+
     @ManyToMany
     private List<Test> testList;
+
     @ManyToMany
     private List<Person> personList;
 
