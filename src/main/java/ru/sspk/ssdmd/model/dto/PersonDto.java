@@ -1,5 +1,7 @@
 package ru.sspk.ssdmd.model.dto;
 
+import java.util.List;
+
 public class PersonDto {
 
     private Long id;
@@ -9,6 +11,7 @@ public class PersonDto {
     private String email;
     private String department;
     private Boolean chief;
+    private List<UserDto> userDtos;
 
     public PersonDto() {
     }
@@ -22,35 +25,46 @@ public class PersonDto {
         private String email;
         private String department;
         private Boolean chief;
+        private List<UserDto> userDtos;
 
-        //TODO user onetomany
-
-        public void setId(Long id) {
+        public Builder setId(Long id) {
             this.id = id;
+            return this;
         }
 
-        public void setFirstName(String firstName) {
+        public Builder setFirstName(String firstName) {
             this.firstName = firstName;
+            return this;
         }
 
-        public void setLastName(String lastName) {
+        public Builder setLastName(String lastName) {
             this.lastName = lastName;
+            return this;
         }
 
-        public void setMiddleName(String middleName) {
+        public Builder setMiddleName(String middleName) {
             this.middleName = middleName;
+            return this;
         }
 
-        public void setEmail(String email) {
+        public Builder setEmail(String email) {
             this.email = email;
+            return this;
         }
 
-        public void setDepartment(String department) {
+        public Builder setDepartment(String department) {
             this.department = department;
+            return this;
         }
 
-        public void setChief(Boolean chief) {
+        public Builder setChief(Boolean chief) {
             this.chief = chief;
+            return this;
+        }
+
+        public Builder setUserDtos(List<UserDto> userDtos) {
+            this.userDtos = userDtos;
+            return this;
         }
 
         public PersonDto build() {
@@ -124,6 +138,14 @@ public class PersonDto {
         this.chief = chief;
     }
 
+    public List<UserDto> getUserDtos() {
+        return userDtos;
+    }
+
+    public void setUserDtos(List<UserDto> userDtos) {
+        this.userDtos = userDtos;
+    }
+
     @Override
     public String toString() {
         return "PersonDto{" +
@@ -134,6 +156,7 @@ public class PersonDto {
                 ", email='" + email + '\'' +
                 ", department='" + department + '\'' +
                 ", chief=" + chief +
+                ", userDtos=" + userDtos +
                 '}';
     }
 }

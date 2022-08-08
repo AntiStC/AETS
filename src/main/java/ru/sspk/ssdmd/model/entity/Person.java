@@ -1,6 +1,7 @@
 package ru.sspk.ssdmd.model.entity;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Objects;
 
 @Table(name = "person", schema = "public", catalog = "sspk_aets")
@@ -23,6 +24,8 @@ public class Person {
     private String department;
     @Column(name = "chief")
     private Boolean chief;
+    @OneToMany
+    private List<User> users;
 
     public Person() {
     }
@@ -36,8 +39,7 @@ public class Person {
         private String email;
         private String department;
         private Boolean chief;
-
-        //TODO user onetomany
+        private List<User> users;
 
         public void setId(Long id) {
             this.id = id;
@@ -67,6 +69,11 @@ public class Person {
             this.chief = chief;
         }
 
+        public Builder setUsers(List<User> users) {
+            this.users = users;
+            return this;
+        }
+
         public Person build() {
             return new Person(this);
         }
@@ -80,6 +87,7 @@ public class Person {
         this.email = builder.email;
         this.department = builder.department;
         this.chief = builder.chief;
+        this.users=builder.users;
     }
 
     public Long getId() {
@@ -138,6 +146,14 @@ public class Person {
         this.chief = chief;
     }
 
+    public List<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<User> users) {
+        this.users = users;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -171,6 +187,7 @@ public class Person {
                 ", email='" + email + '\'' +
                 ", department='" + department + '\'' +
                 ", chief=" + chief +
+                ", users=" + users +
                 '}';
     }
 }
