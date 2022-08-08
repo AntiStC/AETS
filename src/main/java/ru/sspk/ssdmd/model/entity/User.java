@@ -5,7 +5,7 @@ import ru.sspk.ssdmd.model.entity.enumEntity.RoleUser;
 import javax.persistence.*;
 import java.util.Objects;
 
-@Table(name = "user", catalog = "public", schema = "sspk_aets")
+@Table(name = "user", schema = "public", catalog = "sspk_aets")
 @Entity
 public class User {
 

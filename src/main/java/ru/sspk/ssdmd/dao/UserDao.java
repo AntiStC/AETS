@@ -6,5 +6,5 @@ import ru.sspk.ssdmd.model.entity.User;
 import java.util.List;
 
 public interface UserDao extends JpaRepository<User, Long> {
-    List<User> findByLogin(String userName);
+    User findByLogin(String userName);
 }
