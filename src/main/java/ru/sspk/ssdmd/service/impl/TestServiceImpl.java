@@ -22,4 +22,10 @@ public class TestServiceImpl implements TestService {
     public List<TestDto> findAll() {
         return TestMapper.toListTest(dao.findAll());
     }
+
+    @Override
+    public TestDto create(TestDto testDto) {
+        return TestMapper.toDto(dao.save(TestMapper.toEntity(testDto)));
+    }
+
 }

@@ -6,5 +6,6 @@ import java.util.List;
 
 public interface TestService {
     List<TestDto> findAll();
+    TestDto create(TestDto testDto);
 
 }
