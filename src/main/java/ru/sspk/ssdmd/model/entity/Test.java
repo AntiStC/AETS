@@ -29,7 +29,6 @@ public class Test {
     }
 
     public static class Builder {
-
         private Long id;
         private String name;
         private Integer numWrongAns;

@@ -17,6 +17,9 @@ public class Answer {
     @Column(name = "current")
     private Boolean current;
 
+    public Answer() {
+    }
+
     public static class Builder {
 
         private Long id;
