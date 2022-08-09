@@ -4,7 +4,7 @@ package ru.sspk.ssdmd.model.entity;
 import javax.persistence.*;
 import java.util.Objects;
 
-@Table(name = "answer", catalog = "public", schema = "sspk_aets")
+@Table(name = "answer", schema = "public", catalog = "sspk_aets")
 @Entity
 public class Answer {
 
