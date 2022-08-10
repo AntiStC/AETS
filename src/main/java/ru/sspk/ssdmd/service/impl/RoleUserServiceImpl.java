@@ -28,7 +28,12 @@ public class RoleUserServiceImpl implements RoleUserService {
     @Override
     public RoleUserDto findByName(String name) {
         RoleUser roleUser = roleUserDao.findByName(name);
-        if (roleUser != null) return RoleUserMapper.toDto(roleUser);
-        throw new IllegalArgumentException("Role `" + name + "` - not found!");
+        if (roleUser != null) {
+            return RoleUserMapper.toDto(roleUser);
+        } else
+        {
+            new IllegalArgumentException("Role `" + name + "` - not found!");
+            return null;
+        }
     }
 }

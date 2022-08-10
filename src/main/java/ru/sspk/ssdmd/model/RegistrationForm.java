@@ -69,13 +69,7 @@ public class RegistrationForm {
     }
 
     public UserDto toUserDto(PasswordEncoder passwordEncoder) {
-        RoleUserDto role = roleUserService.findByName("USER");
-        if (role == null) {
-            role = new RoleUserDto.Builder().setName("USER").build();
-            role = roleUserService.save(role);
-        }
-        Set<RoleUserDto> roles = Set.of(role);
-        return new UserDto.Builder().setLogin(username).setPassword(passwordEncoder.encode(password)).setRoles(roles).build();
+        return new UserDto.Builder().setLogin(username).setPassword(passwordEncoder.encode(password)).build();
     }
 
 }

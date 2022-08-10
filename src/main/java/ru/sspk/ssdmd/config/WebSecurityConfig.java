@@ -25,22 +25,20 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private UserDetailsService userDetailsService;
 
-//    @Bean
-//    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-//        return http
-//                .authorizeRequests()
-//                .antMatchers("/main").access("hasRole('USER')")
-//                .antMatchers("/test").access("hasRole('USER')")
-//                .antMatchers("/admin").access("hasRole('ADMIN')")
-//                .antMatchers("/registration").access("permitAll()")
-//                .antMatchers("/").access("permitAll()")
-//                .antMatchers("/**").access("permitAll()")
-//                .and()
-//                .formLogin()
-//                .successForwardUrl("/main")
-//                .and()
-//                .build();
-//    }
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http
+                .authorizeRequests()
+                    .antMatchers("/main").access("hasRole('USER')")
+                    .antMatchers("/test").access("hasRole('USER')")
+                    .antMatchers("/admin").access("hasRole('ADMIN')")
+                    .antMatchers("/registration").access("permitAll()")
+                    .antMatchers("/").access("permitAll()")
+                    .antMatchers("/**").access("permitAll()")
+                    .and()
+                .formLogin()
+                    .permitAll();
+    }
 
     @Override
     public void configure(AuthenticationManagerBuilder auth) throws Exception {

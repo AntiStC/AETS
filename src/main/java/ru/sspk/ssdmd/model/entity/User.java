@@ -16,7 +16,7 @@ public class User {
     private String login;
     @Column(name = "password")
     private String password;
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     private Set<RoleUser> roles;
 
     public User() {
