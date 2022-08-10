@@ -9,6 +9,8 @@ import ru.sspk.ssdmd.model.entity.User;
 import ru.sspk.ssdmd.model.mapper.UserMapper;
 import ru.sspk.ssdmd.service.UserService;
 
+import javax.transaction.Transactional;
+
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -16,6 +18,7 @@ public class UserServiceImpl implements UserService {
     private UserDao userDao;
 
     @Override
+    @Transactional
     public UserDto findByLogin(String login) {
         User user = userDao.findByLogin(login);
         if (user != null) return UserMapper.toDto(user);

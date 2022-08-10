@@ -10,7 +10,7 @@ import ru.sspk.ssdmd.service.UserService;
 
 import java.util.*;
 
-public class UserDetail extends User implements UserDetails {
+public class UserDetail implements UserDetails {
 
     private User user;
 
@@ -21,7 +21,7 @@ public class UserDetail extends User implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> roles = new ArrayList<>();
-        super.getRoles().stream().forEach(
+        user.getRoles().stream().forEach(
                 role -> roles.add(new SimpleGrantedAuthority(role.getName()))
         );
         return roles;

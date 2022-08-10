@@ -40,9 +40,9 @@ public class RegistrationController {
     @PostMapping
     public String processRegistration(RegistrationForm form) {
         UserDto userDto = form.toUserDto(passwordEncoder);
-        RoleUserDto roleUserDto = roleUserService.findByName("USER");
+        RoleUserDto roleUserDto = roleUserService.findByName("ROLE_USER");
         if (null == roleUserDto) {
-            roleUserDto = new RoleUserDto.Builder().setName("USER").build();
+            roleUserDto = new RoleUserDto.Builder().setName("ROLE_USER").build();
             roleUserDto = roleUserService.save(roleUserDto);
         }
         userDto.setRoles(Set.of(roleUserDto));
