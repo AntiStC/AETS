@@ -1,6 +1,5 @@
 package ru.sspk.ssdmd.security.ldap;
 
-import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.ldap.core.AttributesMapper;
@@ -19,10 +18,10 @@ public class LdapPersonImpl implements LdapPersonRepo {
     @Autowired
     private LdapTemplate ldapTemplate;
 
-    @Bean
-    public LdapTemplate getLdapTemplate() {
-        return new LdapTemplate();
-    }
+//    @Bean
+//    public LdapTemplate getLdapTemplate() {
+//        return new LdapTemplate();
+//    }
 
     @Override
     public List<LdapPerson> getAllUsers() {
@@ -42,7 +41,7 @@ public class LdapPersonImpl implements LdapPersonRepo {
 
     private static class PersonAttributesMapper implements AttributesMapper<LdapPerson> {
 
-        public @NotNull LdapPerson mapFromAttributes(Attributes attrs) throws NamingException {
+        public LdapPerson mapFromAttributes(Attributes attrs) throws NamingException {
             LdapPerson person = new LdapPerson();
             person.setUserName((String) attrs.get("uid").get());
             person.setDisplayName((String) attrs.get("cn").get());

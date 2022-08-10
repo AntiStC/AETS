@@ -7,8 +7,15 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
+import ru.sspk.ssdmd.model.dto.UserDto;
+import ru.sspk.ssdmd.model.mapper.UserMapper;
+import ru.sspk.ssdmd.security.jdbc.UserDetail;
+import ru.sspk.ssdmd.service.UserService;
 
 
 @Configuration
@@ -16,21 +23,24 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    private CustomUserDetailsService userDetailsService;
+    private UserDetailsService userDetailsService;
 
-    @Bean
-    public CustomUserDetailsService getUserDetailsService() {
-        return new CustomUserDetailsService();
-    }
-
-    @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http
-                .authorizeRequests()
-                .anyRequest().fullyAuthenticated()
-                .and()
-                .formLogin();
-    }
+//    @Bean
+//    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+//        return http
+//                .authorizeRequests()
+//                .antMatchers("/main").access("hasRole('USER')")
+//                .antMatchers("/test").access("hasRole('USER')")
+//                .antMatchers("/admin").access("hasRole('ADMIN')")
+//                .antMatchers("/registration").access("permitAll()")
+//                .antMatchers("/").access("permitAll()")
+//                .antMatchers("/**").access("permitAll()")
+//                .and()
+//                .formLogin()
+//                .successForwardUrl("/main")
+//                .and()
+//                .build();
+//    }
 
     @Override
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -52,6 +62,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean(name = "passwordEncoder")
     public PasswordEncoder passwordencoder() {
         return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public UserDetailsService userDetailsService(UserService userService) {
+        return username -> {
+            UserDto userDto = userService.findByLogin(username);
+            if (userDto != null) {
+                UserDetail user = new UserDetail(UserMapper.toEntity(userDto));
+                return user;
+            }
+            throw new UsernameNotFoundException("User ‘" + username + "’ not found");
+        };
     }
 
 }
