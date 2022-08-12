@@ -76,6 +76,11 @@ public class TestServiceImpl implements TestService {
     }
 
     @Override
+    public void deleteById(Long id) {
+        testDao.deleteById(id);
+    }
+
+    @Override
     public List<TestDto> findListOfTestForUser(Principal principal) {
         List<TestDto> allTests = TestMapper.toListTest(testDao.findAll());
         if(!(showAll)) {
