@@ -15,11 +15,17 @@ public class ResultMapper {
 
     public static ResultDto toDto(Result result) {
 
-        List<TestDto> testDtoList = result.getTestList().stream()
-                .map(TestMapper::toDto).toList();
+        List<TestDto> testDtoList = null;
+        if (result.getTestList() != null) {
+            testDtoList = result.getTestList().stream()
+                    .map(TestMapper::toDto).toList();
+        }
 
-        List<PersonDto> personDtoList = result.getPersonList().stream()
-                .map(PersonMapper::toDto).toList();
+        List<PersonDto> personDtoList = null;
+        if (result.getPersonList() != null) {
+            personDtoList = result.getPersonList().stream()
+                    .map(PersonMapper::toDto).toList();
+        }
 
         ResultDto resultDto = new ResultDto.Builder()
                 .setId(result.getId())
@@ -34,11 +40,17 @@ public class ResultMapper {
 
     public static Result toEntity(ResultDto resultDto) {
 
-        List<Test> testList = resultDto.getTestList().stream()
-                .map(TestMapper::toEntity).toList();
+        List<Test> testList = null;
+        if (resultDto.getTestList() != null) {
+            testList = resultDto.getTestList().stream()
+                    .map(TestMapper::toEntity).toList();
+        }
 
-        List<Person> personList = resultDto.getPersonList().stream()
-                .map(PersonMapper::toEntity).toList();
+        List<Person> personList = null;
+        if (resultDto.getPersonList() != null) {
+            personList = resultDto.getPersonList().stream()
+                    .map(PersonMapper::toEntity).toList();
+        }
 
         Result result = new Result.Builder()
                 .setId(resultDto.getId())

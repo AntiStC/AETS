@@ -13,8 +13,11 @@ import java.util.stream.Collectors;
 public class UserMapper {
     public static UserDto toDto(User user) {
 
-        Set<RoleUserDto> roleUserDtoSet = user.getRoles().stream()
-                .map(RoleUserMapper::toDto).collect(Collectors.toSet());
+        Set<RoleUserDto> roleUserDtoSet = null;
+        if (user.getRoles() != null) {
+            roleUserDtoSet = user.getRoles().stream()
+                    .map(RoleUserMapper::toDto).collect(Collectors.toSet());
+        }
 
         UserDto userDto = new UserDto.Builder()
                 .setId(user.getId())
@@ -28,8 +31,11 @@ public class UserMapper {
 
     public static User toEntity(UserDto userDto) {
 
-        Set<RoleUser> roleUserSet = userDto.getRoles().stream()
-                .map(RoleUserMapper::toEntity).collect(Collectors.toSet());
+        Set<RoleUser> roleUserSet = null;
+        if (userDto.getRoles() != null) {
+            roleUserSet = userDto.getRoles().stream()
+                    .map(RoleUserMapper::toEntity).collect(Collectors.toSet());
+        }
 
         User user = new User.Builder()
                 .setId(userDto.getId())
