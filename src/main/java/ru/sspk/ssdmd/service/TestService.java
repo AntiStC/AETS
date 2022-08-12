@@ -12,6 +12,7 @@ public interface TestService {
     TestDto generate(String testName);
     TestDto findById(Long id);
     TestDto save (TestDto testDto);
+    void deleteById(Long id);
     List<TestDto> findListOfTestForUser(Principal principal);
 
 }
