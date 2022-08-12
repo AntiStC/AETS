@@ -15,6 +15,7 @@ import ru.sspk.ssdmd.service.ResultService;
 import java.sql.Timestamp;
 import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class ResultServiceImpl implements ResultService {
@@ -31,7 +32,7 @@ public class ResultServiceImpl implements ResultService {
     public ResultDto generateResult(TestDto testDto, PersonDto personDto) {
         Result result = ResultMapper.toEntity(
                 new ResultDto.Builder()
-                        .setTestResult(testDto.getNumWrongAns() > 0)
+                        .setTestResult(testDto.getNumWrongAns() >= 0)
                         .setTimeAt(new Timestamp(new Date().getTime()))
                         .setPersonList(Collections.singletonList(personDto))
                         .setTestList(Collections.singletonList(TestMapper.toDto(testDao.getById(testDto.getId()))))
@@ -43,5 +44,10 @@ public class ResultServiceImpl implements ResultService {
     @Override
     public ResultDto saveResult(ResultDto resultDto) {
         return ResultMapper.toDto(resultDao.save(ResultMapper.toEntity(resultDto)));
+    }
+
+    @Override
+    public List<ResultDto> getByPersonListUsersLogin(String login) {
+        return ResultMapper.toListResult(resultDao.getByPersonListUsersLogin(login));
     }
 }
