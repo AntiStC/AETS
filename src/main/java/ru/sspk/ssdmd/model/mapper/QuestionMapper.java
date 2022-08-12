@@ -13,8 +13,11 @@ public class QuestionMapper {
 
     public static QuestionDto toDto(Question question) {
 
-        List<AnswerDto> answerDtoList = question.getAnswers().stream()
-                .map(AnswerMapper::toDto).toList();
+        List<AnswerDto> answerDtoList = null;
+        if (question.getAnswers() != null) {
+            answerDtoList = question.getAnswers().stream()
+                    .map(AnswerMapper::toDto).toList();
+        }
 
         QuestionDto questionDto = new QuestionDto.Builder()
                 .setId(question.getId())
@@ -29,8 +32,11 @@ public class QuestionMapper {
 
     public static Question toEntity(QuestionDto questionDto) {
 
-        List<Answer> answerList = questionDto.getAnswerDtos().stream()
-                .map(AnswerMapper::toEntity).toList();
+        List<Answer> answerList = null;
+        if (questionDto.getAnswerDtos() != null) {
+            answerList = questionDto.getAnswerDtos().stream()
+                    .map(AnswerMapper::toEntity).toList();
+        }
 
         Question question = new Question.Builder()
                 .setId(questionDto.getId())

@@ -8,17 +8,16 @@ import ru.sspk.ssdmd.model.entity.Test;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class TestMapper {
 
     public static TestDto toDto(Test test) {
 
-
-        List<QuestionDto> questionDtoList =
-                (List<QuestionDto>) test.getQuestionList().stream()
-                    .flatMap(question -> Stream.ofNullable(question));
-
+        List<QuestionDto> questionDtoList = null;
+        if (test.getQuestionList() != null) {
+            questionDtoList = test.getQuestionList().stream()
+                    .map(QuestionMapper::toDto).toList();
+        }
 
         TestDto testDto = new TestDto.Builder()
                 .setId(test.getId())
@@ -34,11 +33,11 @@ public class TestMapper {
 
     public static Test toEntity(TestDto testDto) {
 
-
-        List<Question> questionList = (List<Question>) testDto.getQuestionList().stream()
-                .flatMap(questionDto -> Stream.ofNullable(questionDto));
-
-
+        List<Question> questionList = null;
+        if (testDto.getQuestionList() != null) {
+            questionList = testDto.getQuestionList().stream()
+                    .map(QuestionMapper::toEntity).toList();
+        }
 
         Test test = new Test.Builder()
                 .setId(testDto.getId())
@@ -52,7 +51,7 @@ public class TestMapper {
         return test;
     }
 
-    public static List<TestDto> toListTest(List<Test> testList){
+    public static List<TestDto> toListTest(List<Test> testList) {
 
         return new ArrayList<>((testList).stream().map(TestMapper::toDto)
                 .collect(Collectors.toList()));
