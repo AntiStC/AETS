@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Добавление нового теста</title>
+</head>
+<body>
+    <div>
+        <h2>Добавление нового теста.</h2>
+    </div>
+
+    <div style="display: none" id="testTitle">
+        <h3>Название теста: <span id="testTitleName"></span></h3>
+    </div>
+
+    <div id="addNewTest">
+        <fieldset>
+            <legend>Добавление нового теста</legend>
+            Назнвание: <input type="text" name="testName" id="testName" />
+            <input type="hidden" id="testId" value="0" />
+            <button onclick="addNewTest()">Добавить</button>
+        </fieldset>
+    </div>
+
+
+    <div style="display: none" id="addNewQuestion">
+        <fieldset>
+            <legend>Добавление нового вопроса</legend>
+            Вопрос: <input type="text" name="questionName" id="questionName" />
+            <input type="hidden" id="questionId" value="0" />
+            <button onclick="addNewQuestion()">Добавить</button>
+        </fieldset>
+    </div>
+    <div style="display: none" id="questionTitle">
+            <h3>Вопрос: <span id="questionTitleName"></span></h3>
+            <button onclick="addNewQuestionToThisTest()">Добавить новый вопрос</button>
+    </div>
+
+    <div style="display: none" id="answerListTitle">
+        <ul id="answerList">
+        </ul>
+    </div>
+    <div style="display: none" id="addNewAnswer">
+        <fieldset>
+            <legend>Добавление нового ответа к вопросу</legend>
+            Ответ: <input type="text" name="textAnswer" id="textAnswer" />
+            Это правильный ответ на вопрос? Да - <input type="checkbox" name="current" id="current" />
+            <input type="hidden" id="idAnswer" value="0" />
+            <button onclick="addNewAnswer()">Добавить</button>
+        </fieldset>
+    </div>
+
+</body>
+<script th:src="@{/../js/jquery.min.js}"></script>
+<script>
+    function addNewTest() {
+        var testName = $("#testName").val();
+        var arr = {name : testName};
+        $.getJSON({
+            url: '/admin/test/add',
+            type: 'POST',
+            data: JSON.stringify(arr),
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            async: false,
+            success: function(answer) {
+                if(answer) {
+                    $("#testTitle").show();
+                    $("#testTitleName").text(answer.name);
+                    $("#testId").val(answer.id);
+                    $("#addNewTest").hide();
+                    $("#addNewQuestion").show();
+                }
+            }
+        });
+    }
+
+    function addNewQuestion() {
+        var questionName = $("#questionName").val();
+        var testId = $("#testId").val();
+        var arr = {
+            name : questionName,
+            testId : testId
+        };
+        $.getJSON({
+            url: '/admin/test/question/add',
+            type: 'POST',
+            data: JSON.stringify(arr),
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            async: false,
+            success: function(answer) {
+                if(answer) {
+                    $("#addNewQuestion").hide();
+                    $("#questionTitle").show();
+                    $("#addNewAnswer").show();
+                    $("#questionId").val(answer.id);
+                }
+            }
+        });
+    }
+
+    function addNewAnswer() {
+        var questionId = $("#questionId").val();
+        var textAnswer = $("#textAnswer").val();
+        var current = $("#current").val();
+        var arr = {
+            questionId : questionId,
+            textAnswer : textAnswer,
+            current : current
+        };
+        $.getJSON({
+            url: '/admin/test/question/answer/add',
+            type: 'POST',
+            data: JSON.stringify(arr),
+            contentType: 'application/json; charset=utf-8',
+            dataType: 'json',
+            async: false,
+            success: function(answer) {
+                if(answer) {
+                    $("#addNewQuestion").hide();
+                    $("#questionTitle").show();
+                    $("#addNewAnswer").show();
+                    $("#answerListTitle").show();
+                    $("#answerList li:last").after("<li>" + answer.textAnswer + "</li>");
+                }
+            }
+        });
+    }
+
+    function addNewQuestionToThisTest() {
+        $("#questionTitle").hide();
+        $("#addNewAnswer").hide();
+        $("#addNewQuestion").show();
+        $("#questionName").val("");
+        $("#questionId").val(0);
+    }
+</script>
+</html>

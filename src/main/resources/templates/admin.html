@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin page</title>
+</head>
+<body>
+<h1>Страница администратора системы</h1>
+    <article>
+        <div>
+            <a th:href="@{/admin/test/add}"><button>Добавить новый тест</button></a>
+        </div>
+        <div>
+            <p>Список тестов:</p>
+            <div th:if="${#lists.isEmpty(testList)}">Тестов не нейдено</div>
+            <div th:if="${not #lists.isEmpty(testList)}">
+                <table>
+                    <tr th:each="test : ${testList}">
+                        <td>
+                            <a th:href="@{/test/{testId}(testId=${test.id})}" th:text="${test.name}">Название теста</a>
+                        </td>
+                        <td>
+                            <a th:href="@{/admin/test/{testId}?action=edit(testId=${test.id})}">Редактировать</a>
+                        </td>
+                        <td>
+                            <span th:onclick="|if(confirm('Вы точно хотите удалить тест?')) testDelete(${test.id})|">Удалить</span>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </article>
+</body>
+<script>
+    function testDelete(id) {
+        var Httpreq = new XMLHttpRequest(); // a new request
+        Httpreq.open("GET","/admin/test/" + id + "?action=delete",false);
+        Httpreq.send(null);
+        alert(JSON.stringify(Httpreq.responseText));
+    }
+</script>
+</html>
