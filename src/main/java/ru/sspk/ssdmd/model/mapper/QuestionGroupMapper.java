@@ -13,8 +13,11 @@ public class QuestionGroupMapper {
 
     public static QuestionGroupDto toDto(QuestionGroup questionGroup) {
 
-        List<QuestionDto> questionDtoList = questionGroup.getQuestionList()
-                .stream().map(QuestionMapper::toDto).toList();
+        List<QuestionDto> questionDtoList = null;
+        if (questionGroup.getQuestionList() != null) {
+            questionDtoList = questionGroup.getQuestionList()
+                    .stream().map(QuestionMapper::toDto).toList();
+        }
 
         QuestionGroupDto questionGroupDto = new QuestionGroupDto.Builder()
                 .setId(questionGroup.getId())
@@ -27,8 +30,11 @@ public class QuestionGroupMapper {
 
     public static QuestionGroup toEntity(QuestionGroupDto questionGroupDto) {
 
-        List<Question> questionList = questionGroupDto.getQuestionDtoList()
-                .stream().map(QuestionMapper::toEntity).toList();
+        List<Question> questionList = null;
+        if (questionGroupDto.getQuestionDtoList() != null) {
+            questionList = questionGroupDto.getQuestionDtoList()
+                    .stream().map(QuestionMapper::toEntity).toList();
+        }
 
         QuestionGroup questionGroup = new QuestionGroup.Builder()
                 .setId(questionGroupDto.getId())

@@ -12,8 +12,6 @@ public class RoleUser {
     private Long id;
     @Column(name = "name")
     private String name;
-//    @ManyToMany(mappedBy = "roles")
-//    private Set<User> users;
 
     public RoleUser() {
     }
@@ -21,7 +19,6 @@ public class RoleUser {
     public static class Builder {
         private Long id;
         private String name;
-//        private Set<User> users;
 
         public Builder setId(Long id) {
             this.id = id;
@@ -33,11 +30,6 @@ public class RoleUser {
             return this;
         }
 
-//        public Builder setUsers(Set<User> users) {
-//            this.users = users;
-//            return this;
-//        }
-
         public RoleUser build() {
             return new RoleUser(this);
         }
@@ -46,7 +38,6 @@ public class RoleUser {
     public RoleUser(Builder builder) {
         this.id = builder.id;
         this.name = builder.name;
-//        this.users = builder.users;
     }
 
     public Long getId() {
@@ -64,14 +55,6 @@ public class RoleUser {
     public void setName(String name) {
         this.name = name;
     }
-
-//    public Set<User> getUsers() {
-//        return users;
-//    }
-//
-//    public void setUsers(Set<User> users) {
-//        this.users = users;
-//    }
 
     @Override
     public boolean equals(Object o) {
@@ -91,7 +74,6 @@ public class RoleUser {
         return "RoleUser{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-//                ", users=" + users +
                 '}';
     }
 }
