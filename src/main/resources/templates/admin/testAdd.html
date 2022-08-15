@@ -11,6 +11,7 @@
 
     <div style="display: none" id="testTitle">
         <h3>Название теста: <span id="testTitleName"></span></h3>
+        <a th:href="@{/admin/test/add}"><button>Добавить новый тест</button></a>
     </div>
 
     <div id="addNewTest">
@@ -44,7 +45,7 @@
         <fieldset>
             <legend>Добавление нового ответа к вопросу</legend>
             Ответ: <input type="text" name="textAnswer" id="textAnswer" />
-            Это правильный ответ на вопрос? Да - <input type="checkbox" name="current" id="current" />
+            Это правильный ответ на вопрос? Да - <input type="checkbox" name="current" id="current" value="false"/>
             <input type="hidden" id="idAnswer" value="0" />
             <button onclick="addNewAnswer()">Добавить</button>
         </fieldset>
@@ -95,6 +96,7 @@
                     $("#questionTitle").show();
                     $("#addNewAnswer").show();
                     $("#questionId").val(answer.id);
+                    $("#questionTitleName").text(answer.bodyQuestion);
                 }
             }
         });
@@ -104,6 +106,7 @@
         var questionId = $("#questionId").val();
         var textAnswer = $("#textAnswer").val();
         var current = $("#current").val();
+        if ($("#current").is(":checked")) current = "true";
         var arr = {
             questionId : questionId,
             textAnswer : textAnswer,
@@ -121,8 +124,11 @@
                     $("#addNewQuestion").hide();
                     $("#questionTitle").show();
                     $("#addNewAnswer").show();
+                    $("#textAnswer").val("");
+                    $("#current").val("false");
+                    $("#current").prop( "checked", false );
                     $("#answerListTitle").show();
-                    $("#answerList li:last").after("<li>" + answer.textAnswer + "</li>");
+                    $("#answerList").append("<li>" + answer.textAnswer + "</li>");
                 }
             }
         });
@@ -131,6 +137,8 @@
     function addNewQuestionToThisTest() {
         $("#questionTitle").hide();
         $("#addNewAnswer").hide();
+        $("#answerListTitle").hide();
+        $("#answerList").empty();
         $("#addNewQuestion").show();
         $("#questionName").val("");
         $("#questionId").val(0);

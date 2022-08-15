@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Test page</title>
+</head>
+<body>
+    <h2>Страница просмотра теста.</h2>
+    <fieldset>
+        <legend>Название теста</legend>
+        <div th:if="${test != null}">
+        <h3 th:text="${test.name}">Название теста</h3>
+        <fieldset>
+            <legend>Вопросы</legend>
+            <div th:if="${#lists.isEmpty(test.questionList)}">Вопросов нет :)</div>
+            <div th:if="${not #lists.isEmpty(test.questionList)}">
+                    <div th:each="test : ${test.questionList}">
+                        <b><span th:text="${test.bodyQuestion}">Вопрос</span></b>
+                        <fieldset>
+                            <legend>Варианты ответов:</legend>
+                            <div th:if="${#lists.isEmpty(test.answerDtos)}">Ответов не найдено</div>
+                            <div th:if="${not #lists.isEmpty(test.answerDtos)}">
+                                <ul th:each="answer : ${test.answerDtos}">
+                                    <li><span th:text="${answer.textAnswer}">Ответ</span><span th:if="${answer.current}"> (правильный ответ)</span></span>
+                                </ul>
+                            </div>
+                        </fieldset>
+                    </div>
+            </div>
+        </fieldset>
+        </div>
+        <div th:if="${test == null}">Тест не найден</div>
+    </fieldset>
+</body>
+</html>

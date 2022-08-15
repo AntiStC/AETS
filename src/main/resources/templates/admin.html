@@ -34,7 +34,7 @@
 <script>
     function testDelete(id) {
         var Httpreq = new XMLHttpRequest(); // a new request
-        Httpreq.open("GET","/admin/test/" + id + "?action=delete",false);
+        Httpreq.open("DELETE","/admin/test/" + id + "?action=delete",false);
         Httpreq.send(null);
         alert(JSON.stringify(Httpreq.responseText));
     }

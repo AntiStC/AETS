@@ -17,9 +17,7 @@ import ru.sspk.ssdmd.service.AnswerService;
 import ru.sspk.ssdmd.service.QuestionService;
 import ru.sspk.ssdmd.service.TestService;
 
-import javax.annotation.security.RolesAllowed;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Controller
 public class AdminController {
@@ -37,9 +35,6 @@ public class AdminController {
         this.questionService = questionService;
     }
 
-    @Autowired
-
-
     @GetMapping(value = "/admin")
     public String getAdmin(Model model) {
         List<TestDto> testDtoList = testService.findAll();
@@ -47,14 +42,14 @@ public class AdminController {
         return "admin";
     }
 
-    @GetMapping(value = "/admin/test/{id}")
+    @DeleteMapping(value = "/admin/test/{id}")
     @ResponseBody
     public String testDelete(@PathVariable("id") int id, @RequestParam(required = true) String action) {
         String msg;
         switch (action) {
             case "delete":
                 // TODO
-//                testService.delete(id);
+                testService.deleteById(Integer.toUnsignedLong(id));
                 msg = "Test id: " + id + " is deleted";
                 break;
             default: msg = "Error! Action is wrong!";
@@ -68,8 +63,8 @@ public class AdminController {
         TestDto testDto = new TestDto.Builder().setName(requestAddNewTest.getName()).build();
         testDto = testService.save(testDto);
         ResponseAddNewTest resp = new ResponseAddNewTest();
-        resp.setName(requestAddNewTest.getName());
-        resp.setId(requestAddNewTest.getId());
+        resp.setName(testDto.getName());
+        resp.setId(testDto.getId().toString());
         return resp;
     }
 
@@ -87,8 +82,9 @@ public class AdminController {
         QuestionDto questionDto = new QuestionDto.Builder().setBodyQuestion(requestAddNewQuestion.getName()).build();
         questionDto = questionService.save(questionDto);
         // находим тест по переданному id и добавляем в него вопрос
-        TestDto testDto = testService.findById(requestAddNewQuestion.getTestId());
-        List<QuestionDto> questionDtoList = testDto.getQuestionList();
+        long id = Long.parseLong(requestAddNewQuestion.getTestId());
+        TestDto testDto = testService.findById(id);
+        List<QuestionDto> questionDtoList = new ArrayList<>(testDto.getQuestionList());
         if (null == questionDtoList) {
             questionDtoList = new ArrayList<>();
         }
@@ -97,6 +93,7 @@ public class AdminController {
         testService.save(testDto);
         // отправляем обратно id вопроса
         resp.setId(questionDto.getId().toString());
+        resp.setBodyQuestion(questionDto.getBodyQuestion());
         return resp;
     }
 
@@ -108,9 +105,9 @@ public class AdminController {
         AnswerDto answerDto = new AnswerDto.Builder().setTextAnswer(requestAddNewAnswer.getTextAnswer()).setCurrent(requestAddNewAnswer.isCurrent()).build();
         answerDto = answerService.save(answerDto);
         // находим вопрос по переданному id и добавляем в него ответ
-        int id = Integer.getInteger(requestAddNewAnswer.getQuestionId());
+        long id = Long.parseLong(requestAddNewAnswer.getQuestionId());
         QuestionDto questionDto = questionService.findById(id);
-        List<AnswerDto> answerDtoList = questionDto.getAnswerDtos();
+        List<AnswerDto> answerDtoList = new ArrayList<>(questionDto.getAnswerDtos());
         if (null == answerDtoList) {
             answerDtoList = new ArrayList<>();
         }
@@ -119,7 +116,33 @@ public class AdminController {
         questionService.save(questionDto);
         // отправляем обратно id вопроса
         resp.setId(answerDto.getId().toString());
-        resp.setTextAnswer(answerDto.getTextAnswer());
+        resp.setTextAnswer(answerDto.getCurrent() ? answerDto.getTextAnswer() + "(правильный ответ)" : answerDto.getTextAnswer());
+        resp.setCurrent(answerDto.getCurrent());
         return resp;
+    }
+
+    @GetMapping("/admin/test/{id}")
+    public String getTest(@PathVariable("id") int id, Model model) {
+        // ищем сам тест
+        long idTest = Integer.toUnsignedLong(id);
+        TestDto testDto = null;
+        try {
+            testDto = testService.findById(idTest);
+        } catch (NoSuchElementException e) {
+            e.printStackTrace();
+        }
+        if (null != testDto) {
+            // получаем списко вопросов
+            List<QuestionDto> questionDtoList = testDto.getQuestionList();
+            // получаем спимок ответов к вопросам
+            Map<Long, List<AnswerDto>> answerMap = new HashMap<>();
+            for (QuestionDto question :
+                    questionDtoList) {
+                answerMap.put(question.getId(), question.getAnswerDtos());
+            }
+            model.addAttribute("answerMap", answerMap);
+        }
+        model.addAttribute("test", testDto);
+        return "admin/test";
     }
 }

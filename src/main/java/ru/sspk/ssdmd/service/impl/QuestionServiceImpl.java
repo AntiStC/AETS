@@ -27,7 +27,7 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public QuestionDto findById(int id) {
+    public QuestionDto findById(long id) {
         Question question = questionDao.findById(id);
         QuestionDto questionDto = null;
         if (null != question) return questionDto = QuestionMapper.toDto(question);

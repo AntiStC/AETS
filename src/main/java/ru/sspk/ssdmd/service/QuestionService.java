@@ -6,6 +6,6 @@ public interface QuestionService {
 
     QuestionDto save(QuestionDto questionDto);
 
-    QuestionDto findById(int id);
+    QuestionDto findById(long id);
 
 }

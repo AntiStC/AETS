@@ -5,6 +5,16 @@ public class ResponseAddNewAnswer {
     private String id;
     private String textAnswer;
 
+    private Boolean current;
+
+    public Boolean getCurrent() {
+        return current;
+    }
+
+    public void setCurrent(Boolean current) {
+        this.current = current;
+    }
+
     public String getId() {
         return id;
     }
